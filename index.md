@@ -11,7 +11,7 @@
 
 | Sample   | EL speech                                                           | NL speech                                                           | 
 |:--------:|:-------------------------------------------------------------------:|:-------------------------------------------------------------------:|
-| 261      | <audio src="audio/el01/EL01_281.wav"></audio> | <audio src="audio/el01/EL01_284.wav"></audio> |
+| 261      | <audio src="audio/el01/EL01_281.wav" controls preload="none"></audio> | <audio src="audio/el01/EL01_284.wav" controls preload="none"></audio> |
 
 ### sample 261
 
