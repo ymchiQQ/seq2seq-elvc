@@ -1,4 +1,4 @@
-# seq2seq elvc demo page
+# Seq2seq ELVC
 
 ## Welcome to Demo Pages
 
@@ -13,10 +13,12 @@ The electrolaryngeal speech (EL speech) is typically spoken with an electrolaryn
 * MT-CLDNN: multi-task CLDNN[^first]
 * TFS: train from sractch with seq2seq model
 * PT: seq2seq model with TTS pretraining
+* NLXX: natural speech of speaker ID
+* ELXX: electrolaryngeal speech of speaker ID
 
 ## Audio samples
 
-### sample EL01-NL01
+### Pair EL01-NL01
 
 |   Model   | transcription: 他捐了很多衣物給災區 (ta juan le hen duo yi wu gei zai qu) |
 |:---------:|:-------------------------------------------------------------------:|
@@ -25,7 +27,6 @@ The electrolaryngeal speech (EL speech) is typically spoken with an electrolaryn
 |    TFS    | <audio src="audio/el01_nl01/tfs/EL01-NL01_TFS_281.wav" controls preload></audio> |
 |    PT     | <audio src="audio/el01_nl01/pt/EL01-NL01_PT_281.wav" controls preload></audio> |
 | NL speech | <audio src="audio/nl01/NL01_281.wav" controls preload></audio> |
-
 
 |   Model   |transcription: 我把不用的家具送人了 (wo ba bu yong de jia ju song ren le)|
 |:---------:|:-------------------------------------------------------------------:|
@@ -44,7 +45,32 @@ The electrolaryngeal speech (EL speech) is typically spoken with an electrolaryn
 | NL speech | <audio src="audio/nl01/NL01_287.wav" controls preload></audio> |
 
 
-### sample EL01-NL02
+### Pair EL01-NL02
+
+|   Model   | transcription: 他捐了很多衣物給災區 (ta juan le hen duo yi wu gei zai qu) |
+|:---------:|:-------------------------------------------------------------------:|
+| EL speech | <audio src="audio/el01/EL01_281.wav" controls preload></audio> |
+| MT-CLDNN  | <audio src="audio/el01_nl02/mtcldnn/EL01-NL01_MTCLDNN_h5_GV_no0th_281.wav" controls preload></audio> |
+|    TFS    | <audio src="audio/el01_nl02/tfs/EL01-NL01_TFS_281.wav" controls preload></audio> |
+|    PT     | <audio src="audio/el01_nl02/pt/EL01-NL01_PT_281.wav" controls preload></audio> |
+| NL speech | <audio src="audio/nl02/NL02_281.wav" controls preload></audio> |
+
+|   Model   |transcription: 我幫他把雞蛋放入冰箱 (wo bang ta ba ji dan fang ru bing xiang)|
+|:---------:|:-------------------------------------------------------------------:|
+| EL speech | <audio src="audio/el01/EL01_285.wav" controls preload></audio> |
+| MT-CLDNN  | <audio src="audio/el01_nl02/mtcldnn/EL01-NL01_MTCLDNN_h5_GV_no0th_285.wav" controls preload></audio> |
+|    TFS    | <audio src="audio/el01_nl02/tfs/EL01-NL01_TFS_285.wav" controls preload></audio> |
+|    PT     | <audio src="audio/el01_nl02/pt/EL01-NL01_PT_285.wav" controls preload></audio> |
+| NL speech | <audio src="audio/nl02/NL01_285.wav" controls preload></audio> |
+
+|   Model   | transcription: 那個牆上掛著一幅油畫 (na ge qiang shang gua zhu yi fu you hua)|
+|:---------:|:-------------------------------------------------------------------:|
+| EL speech | <audio src="audio/el01/EL01_287.wav" controls preload></audio> |
+| MT-CLDNN  | <audio src="audio/el01_nl02/mtcldnn/EL01-NL01_MTCLDNN_h5_GV_no0th_287.wav" controls preload></audio> |
+|    TFS    | <audio src="audio/el01_nl02/tfs/EL01-NL01_TFS_287.wav" controls preload></audio> |
+|    PT     | <audio src="audio/el01_nl02/pt/EL01-NL01_PT_287.wav" controls preload></audio> |
+| NL speech | <audio src="audio/nl02/NL02_287.wav" controls preload></audio> |
+
 
 ## Reference
 
