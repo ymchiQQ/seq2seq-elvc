@@ -1,8 +1,4 @@
-# Seq2seq ELVC
-
-## Welcome to Demo Pages
-
-[Demo pages](https://ymchiqq.github.io/seq2seq-elvc/)
+# Seq2seq electrolaryngeal speech voice conversion (ELVC)
 
 ## Abstact
 
