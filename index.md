@@ -61,7 +61,7 @@ The electrolaryngeal speech (EL speech) is typically spoken with an electrolaryn
 | MT-CLDNN  | <audio src="audio/el01_nl02/mtcldnn/EL01-NL02_MTCLDNN_h5_GV_no0th_285.wav" controls preload></audio> |
 |    TFS    | <audio src="audio/el01_nl02/tfs/EL01-NL02_TFS_285.wav" controls preload></audio> |
 |    PT     | <audio src="audio/el01_nl02/pt/EL01-NL02_PT_285.wav" controls preload></audio> |
-| NL speech | <audio src="audio/nl02/NL01_285.wav" controls preload></audio> |
+| NL speech | <audio src="audio/nl02/NL02_285.wav" controls preload></audio> |
 
 |   Model   | transcription: 那個牆上掛著一幅油畫 (na ge qiang shang gua zhu yi fu you hua)|
 |:---------:|:-------------------------------------------------------------------:|
