@@ -1,6 +1,6 @@
 ## Welcome to Demo Pages
 
-[Demo pages](https://ymchiqq.github.io/demoooo/)
+[Demo pages](https://ymchiqq.github.io/seq2seq-elvc/)
 
 ## Abstract
 
@@ -11,7 +11,7 @@
 
 | Sample   | EL speech                                                           | NL speech                                                           | 
 |:--------:|:-------------------------------------------------------------------:|:-------------------------------------------------------------------:|
-| 261      | <audio src="audio/el01/EL01_281.wav" controls preload="none"></audio> | <audio src="audio/el01/EL01_284.wav" controls preload="none"></audio> |
+| 261      | <audio src="audio/el01/EL01_281.wav"></audio> | <audio src="audio/el01/EL01_284.wav" controls preload="none"></audio> |
 
 ### sample 261
 
@@ -22,7 +22,7 @@
 
 ### sample
 
-|   Model   |                             Sample 261                              |
+|   Model   | Sample 1: 他捐了很多衣物給災區 ()                             |
 |:---------:|:-------------------------------------------------------------------:|
 | EL speech | <audio src="audio/el01/EL01_281.wav" controls preload></audio> |
 |    TFS    | <audio src="audio/el01/EL01_281.wav" controls preload></audio> |
@@ -30,7 +30,7 @@
 | MT-CLDNN  | <audio src="audio/el01/EL01_281.wav" controls preload></audio> |
 | NL speech | <audio src="audio/el01/EL01_281.wav" controls preload></audio> |
 
-|   Model   |                             Sample 262                              |
+|   Model   |                             Sample 284                              |
 |:---------:|:-------------------------------------------------------------------:|
 | EL speech | <audio src="audio/el01/EL01_281.wav" controls preload></audio> |
 |    TFS    | <audio src="audio/el01/EL01_281.wav" controls preload></audio> |
