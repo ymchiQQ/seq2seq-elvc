@@ -1,2 +1,2 @@
-# demo page
-[Demo pages](https://ymchiqq.github.io/seq2seq-elvc/)
+# This is a demo for seq2seq electrolaryngeal speech voice conversion (ELVC)
+[Link](https://ymchiqq.github.io/seq2seq-elvc/)
