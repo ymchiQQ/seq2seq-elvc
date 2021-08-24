@@ -49,6 +49,8 @@ Duration related:
 
 ### Pair EL01-NL01
 
+**sample 1**
+
 |   Model   | transcription: 他捐了很多衣物給災區 (ta juan le hen duo yi wu gei zai qu) |
 |:---------:|:-------------------------------------------------------------------:|
 | EL speech | <audio src="audio/el01/EL01_281.wav" controls preload></audio> |
@@ -57,6 +59,8 @@ Duration related:
 |    PT     | <audio src="audio/el01_nl01/pt/EL01-NL01_PT_281.wav" controls preload></audio> |
 | NL speech | <audio src="audio/nl01/NL01_281.wav" controls preload></audio> |
 
+**sample 2**
+
 |   Model   |transcription: 我把不用的家具送人了 (wo ba bu yong de jia ju song ren le)|
 |:---------:|:-------------------------------------------------------------------:|
 | EL speech | <audio src="audio/el01/EL01_284.wav" controls preload></audio> |
@@ -64,6 +68,8 @@ Duration related:
 |    TFS    | <audio src="audio/el01_nl01/tfs/EL01-NL01_TFS_284.wav" controls preload></audio> |
 |    PT     | <audio src="audio/el01_nl01/pt/EL01-NL01_PT_284.wav" controls preload></audio> |
 | NL speech | <audio src="audio/nl01/NL01_284.wav" controls preload></audio> |
+
+**sample 3**
 
 |   Model   | transcription: 那個牆上掛著一幅油畫 (na ge qiang shang gua zhu yi fu you hua)|
 |:---------:|:-------------------------------------------------------------------:|
@@ -76,6 +82,8 @@ Duration related:
 
 ### Pair EL01-NL02
 
+**sample 1**
+
 |   Model   | transcription: 他捐了很多衣物給災區 (ta juan le hen duo yi wu gei zai qu) |
 |:---------:|:-------------------------------------------------------------------:|
 | EL speech | <audio src="audio/el01/EL01_281.wav" controls preload></audio> |
@@ -84,6 +92,8 @@ Duration related:
 |    PT     | <audio src="audio/el01_nl02/pt/EL01-NL02_PT_281.wav" controls preload></audio> |
 | NL speech | <audio src="audio/nl02/NL02_281.wav" controls preload></audio> |
 
+**sample 2**
+
 |   Model   |transcription: 我幫他把雞蛋放入冰箱 (wo bang ta ba ji dan fang ru bing xiang)|
 |:---------:|:-------------------------------------------------------------------:|
 | EL speech | <audio src="audio/el01/EL01_285.wav" controls preload></audio> |
@@ -91,6 +101,8 @@ Duration related:
 |    TFS    | <audio src="audio/el01_nl02/tfs/EL01-NL02_TFS_285.wav" controls preload></audio> |
 |    PT     | <audio src="audio/el01_nl02/pt/EL01-NL02_PT_285.wav" controls preload></audio> |
 | NL speech | <audio src="audio/nl02/NL02_285.wav" controls preload></audio> |
+
+**sample 3**
 
 |   Model   | transcription: 那個牆上掛著一幅油畫 (na ge qiang shang gua zhu yi fu you hua)|
 |:---------:|:-------------------------------------------------------------------:|
