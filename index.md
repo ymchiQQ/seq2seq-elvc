@@ -24,7 +24,7 @@ F0 (Pitch) related:
 * F0 CORR: F0 correlation coefficients
 
 Duration related:
-* DDUR: Average absolute duration difference between the converted and target utterances
+* DDUR: average absolute duration difference between the converted and target utterances
 
 
 
