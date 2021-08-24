@@ -1,4 +1,4 @@
-# Electrolaryngeal speech voice conversion (ELVC)
+# Electrolaryngeal speech voice conversion with sequence-to-sequence modeling (seq2seq ELVC)
 
 ## Abstact
 
