@@ -15,6 +15,7 @@ The electrolaryngeal speech (EL speech) is typically spoken with an electrolaryn
 
 ## Objective evaluation
 ### Pair: EL01-NL01
+
 |  Model   | pretraining | MCD (dB) |  F0 RMSE  |  F0 CORR  |   DDUR    | SER (%)  |
 |:--------:|:-----------:|:--------:|:---------:|:---------:|:---------:|:--------:|
 |   TFS    |      x      |   8.86   |   24.44   |   0.202   | **0.156** |   93.3   |
@@ -22,6 +23,7 @@ The electrolaryngeal speech (EL speech) is typically spoken with an electrolaryn
 | MT-CLDNN |      x      |   7.38   | **24.38** |   0.167   |   0.680   |   76.5   |
 
 ### Pair: EL01-NL02
+
 |  Model   | pretraining | MCD (dB) |  F0 RMSE  |  F0 CORR  |   DDUR    | SER (%) |
 |:--------:|:-----------:|:--------:|:---------:|:---------:|:---------:|:-------:|
 |   TFS    |      x      |  11.17   |   34.41   |   0.365   | **0.178** |   99    |
