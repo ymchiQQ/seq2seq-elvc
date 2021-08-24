@@ -14,6 +14,20 @@ The electrolaryngeal speech (EL speech) is typically spoken with an electrolaryn
 
 
 ## Objective evaluation
+
+Intelligibility related:
+* MCD: Mel-cepstrum distortion
+* SER: syllable error rate of ASR system
+
+F0 (Pitch) related:
+* F0 RMSE: F0 root mean square error
+* F0 CORR: F0 correlation coefficients
+
+Duration related:
+* DDUR: Average absolute duration difference between the converted and target utterances
+
+
+
 ### Pair: EL01-NL01
 
 |  Model   | pretraining | MCD (dB) |  F0 RMSE  |  F0 CORR  |   DDUR    | SER (%)  |
@@ -89,5 +103,5 @@ The electrolaryngeal speech (EL speech) is typically spoken with an electrolaryn
 
 ## Reference
 
-[^first]: K.  Kobayashi  and  T.  Toda,  “Implementation of low-latency electrolaryngeal speech enhancement based on multi-task cldnn,”  inProceedings of 2020 28th EU-SIPCO, 2021, pp. 396–400.
+[^first]: K.  Kobayashi  and  T.  Toda,  “Implementation of low-latency electrolaryngeal speech enhancement based onmulti-task  cldnn,”  inProceedings of 2020 28th EU-SIPCO, 2021, pp. 396–400.
 
