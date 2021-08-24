@@ -87,5 +87,5 @@ The electrolaryngeal speech (EL speech) is typically spoken with an electrolaryn
 
 ## Reference
 
-[^first]: K.  Kobayashi  and  T.  Toda,  “Implementation of low-latency electrolaryngeal speech enhancement based onmulti-task  cldnn,”  inProceedings of 2020 28th EU-SIPCO, 2021, pp. 396–400.
+[^first]: K.  Kobayashi  and  T.  Toda,  “Implementation of low-latency electrolaryngeal speech enhancement based on multi-task cldnn,”  inProceedings of 2020 28th EU-SIPCO, 2021, pp. 396–400.
 
