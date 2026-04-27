@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seq2Seq ELVC Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0f12;
+      --surface: #161a1f;
+      --surface2: #1e2329;
+      --border: #2a3140;
+      --accent: #4fc3f7;
+      --accent2: #81c784;
+      --accent3: #ffb74d;
+      --text: #e0e6ed;
+      --text-muted: #6b7a8d;
+      --text-dim: #3d4a5c;
+      --el-color: #ef9a9a;
+      --nl-color: #a5d6a7;
+      --mt-color: #ce93d8;
+      --tfs-color: #80cbc4;
+      --pt-color: #ffcc80;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(79,195,247,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,195,247,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 60px 0 48px;
+    }
+
+    .tag-line {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(22px, 4vw, 34px);
+      font-weight: 600;
+      line-height: 1.3;
+      color: #fff;
+      max-width: 780px;
+    }
+
+    h1 span {
+      color: var(--accent);
+    }
+
+    .abstract-block {
+      margin-top: 36px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 24px 28px;
+      border-radius: 2px;
+    }
+
+    .abstract-block h2 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .abstract-block p {
+      color: #b0bec5;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    /* Sections */
+    section {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h2.section-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 28px;
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Model cards */
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .model-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 16px 18px;
+      border-radius: 4px;
+    }
+
+    .model-card .name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .model-card .desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Metrics table */
+    .metrics-block {
+      margin-bottom: 36px;
+    }
+
+    .pair-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--accent3);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pair-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .metrics-table th {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 10px 14px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .metrics-table th:first-child { text-align: left; }
+
+    .metrics-table td {
+      padding: 10px 14px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+
+    .metrics-table td:first-child {
+      text-align: left;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+    }
+
+    .metrics-table tr:last-child td { border-bottom: none; }
+
+    .best {
+      color: var(--accent2);
+      font-weight: 600;
+    }
+
+    .pretrain-yes {
+      color: var(--accent2);
+      font-size: 11px;
+    }
+
+    .pretrain-no {
+      color: var(--text-dim);
+      font-size: 11px;
+    }
+
+    /* Audio demo */
+    .pair-section {
+      margin-bottom: 48px;
+    }
+
+    .sample-block {
+      margin-bottom: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .sample-header {
+      padding: 14px 20px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .sample-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2px 10px;
+      border-radius: 100px;
+    }
+
+    .transcript {
+      font-size: 14px;
+      color: #cfd8dc;
+    }
+
+    .transcript em {
+      font-style: normal;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .audio-rows {
+      padding: 4px 0;
+    }
+
+    .audio-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      align-items: center;
+      padding: 10px 20px;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .audio-row:last-child { border-bottom: none; }
+
+    .model-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 3px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .tag-el   { color: var(--el-color); background: rgba(239,154,154,0.1); border: 1px solid rgba(239,154,154,0.2); }
+    .tag-nl   { color: var(--nl-color); background: rgba(165,214,167,0.1); border: 1px solid rgba(165,214,167,0.2); }
+    .tag-mt   { color: var(--mt-color); background: rgba(206,147,216,0.1); border: 1px solid rgba(206,147,216,0.2); }
+    .tag-tfs  { color: var(--tfs-color); background: rgba(128,203,196,0.1); border: 1px solid rgba(128,203,196,0.2); }
+    .tag-pt   { color: var(--pt-color); background: rgba(255,204,128,0.1); border: 1px solid rgba(255,204,128,0.2); }
+
+    audio {
+      width: 100%;
+      height: 32px;
+      accent-color: var(--accent);
+    }
+
+    audio::-webkit-media-controls-panel {
+      background-color: var(--surface2);
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    footer h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    footer p { line-height: 1.8; }
+
+    @media (max-width: 600px) {
+      .audio-row { grid-template-columns: 90px 1fr; gap: 10px; }
+      .model-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <div class="tag-line">Audio Demo · Speech Voice Conversion</div>
+    <h1>Electrolaryngeal Speech Voice Conversion with <span>Sequence-to-Sequence</span> Modeling</h1>
+
+    <div class="abstract-block">
+      <h2>Abstract</h2>
+      <p>
+        Electrolaryngeal (EL) speech is produced using an electrolarynx device that substitutes vocal fold vibrations. Due to limitations in the excitation signals, EL speech suffers from reduced naturalness and intelligibility compared to natural speech (NL speech). This work proposes a novel ELVC system based on <strong>sequence-to-sequence (seq2seq) modeling</strong> with text-to-speech (TTS) pretraining. The seq2seq model employs an attention mechanism to concurrently perform representation learning and alignment, while TTS pretraining enables efficient training with limited data. Experimental results demonstrate notable improvements over a well-known frame-wise ELVC baseline.
+      </p>
+    </div>
+  </header>
+
+  <!-- Models -->
+  <section>
+    <div class="section-label">System</div>
+    <h2 class="section-title">Models</h2>
+
+    <div class="model-grid">
+      <div class="model-card">
+        <div class="name" style="color:var(--mt-color)">MT-CLDNN</div>
+        <div class="desc">Multi-task CLDNN baseline (frame-wise)</div>
+      </div>
+      <div class="model-card">
+        <div class="name" style="color:var(--tfs-color)">TFS</div>
+        <div class="desc">Seq2seq trained from scratch (no pretraining)</div>
+      </div>
+      <div class="model-card">
+        <div class="name" style="color:var(--pt-color)">PT</div>
+        <div class="desc">Seq2seq with TTS pretraining <strong>(proposed)</strong></div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--el-color)"></div>EL Speech — Input</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--nl-color)"></div>NL Speech — Reference</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--mt-color)"></div>MT-CLDNN</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--tfs-color)"></div>TFS</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--pt-color)"></div>PT (Proposed)</div>
+    </div>
+  </section>
+
+  <!-- Metrics -->
+  <section>
+    <div class="section-label">Evaluation</div>
+    <h2 class="section-title">Objective Metrics</h2>
+
+    <div class="metrics-block">
+      <div class="pair-label">EL01 → NL01</div>
+      <table class="metrics-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Pretrain</th>
+            <th>MCD (dB) ↓</th>
+            <th>F0 RMSE ↓</th>
+            <th>F0 CORR ↑</th>
+            <th>DDUR ↓</th>
+            <th>SER (%) ↓</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--tfs-color)">TFS</td>
+            <td><span class="pretrain-no">✗</span></td>
+            <td>8.86</td>
+            <td>24.44</td>
+            <td>0.202</td>
+            <td class="best">0.156</td>
+            <td>93.3</td>
+          </tr>
+          <tr>
+            <td style="color:var(--pt-color)">PT</td>
+            <td><span class="pretrain-yes">✓</span></td>
+            <td class="best">7.10</td>
+            <td>24.72</td>
+            <td class="best">0.212</td>
+            <td>0.167</td>
+            <td class="best">67.5</td>
+          </tr>
+          <tr>
+            <td style="color:var(--mt-color)">MT-CLDNN</td>
+            <td>—</td>
+            <td>7.38</td>
+            <td class="best">24.38</td>
+            <td>0.167</td>
+            <td>0.680</td>
+            <td>76.5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="metrics-block">
+      <div class="pair-label">EL01 → NL02</div>
+      <table class="metrics-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Pretrain</th>
+            <th>MCD (dB) ↓</th>
+            <th>F0 RMSE ↓</th>
+            <th>F0 CORR ↑</th>
+            <th>DDUR ↓</th>
+            <th>SER (%) ↓</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--tfs-color)">TFS</td>
+            <td><span class="pretrain-no">✗</span></td>
+            <td>11.17</td>
+            <td>34.41</td>
+            <td>0.365</td>
+            <td class="best">0.178</td>
+            <td>99.0</td>
+          </tr>
+          <tr>
+            <td style="color:var(--pt-color)">PT</td>
+            <td><span class="pretrain-yes">✓</span></td>
+            <td>8.18</td>
+            <td class="best">33.50</td>
+            <td class="best">0.458</td>
+            <td>0.192</td>
+            <td class="best">75.0</td>
+          </tr>
+          <tr>
+            <td style="color:var(--mt-color)">MT-CLDNN</td>
+            <td>—</td>
+            <td class="best">7.77</td>
+            <td>35.58</td>
+            <td>0.336</td>
+            <td>0.914</td>
+            <td>85.0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Audio Demos -->
+  <section>
+    <div class="section-label">Listening Test</div>
+    <h2 class="section-title">Audio Samples</h2>
+
+    <!-- EL01-NL01 -->
+    <div class="pair-section">
+      <div class="pair-label">Pair EL01 → NL01</div>
+
+      <div class="sample-block">
+        <div class="sample-header">
+          <span class="sample-num">Sample 1</span>
+          <span class="transcript">他捐了很多衣物給災區 <em>tā juān le hěn duō yī wù gěi zāi qū</em></span>
+        </div>
+        <div class="audio-rows">
+          <div class="audio-row">
+            <span class="model-tag tag-el">EL Speech</span>
+            <audio controls preload="none"><source src="audio/el01/EL01_281.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-mt">MT-CLDNN</span>
+            <audio controls preload="none"><source src="audio/el01_nl01/mtcldnn/EL01-NL01_MTCLDNN_h5_GV_no0th_281.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-tfs">TFS</span>
+            <audio controls preload="none"><source src="audio/el01_nl01/tfs/EL01-NL01_TFS_281.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-pt">PT</span>
+            <audio controls preload="none"><source src="audio/el01_nl01/pt/EL01-NL01_PT_281.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-nl">NL Speech</span>
+            <audio controls preload="none"><source src="audio/nl01/NL01_281.wav" type="audio/wav"></audio>
+          </div>
+        </div>
+      </div>
+
+      <div class="sample-block">
+        <div class="sample-header">
+          <span class="sample-num">Sample 2</span>
+          <span class="transcript">我把不用的家具送人了 <em>wǒ bǎ bù yòng de jiā jù sòng rén le</em></span>
+        </div>
+        <div class="audio-rows">
+          <div class="audio-row">
+            <span class="model-tag tag-el">EL Speech</span>
+            <audio controls preload="none"><source src="audio/el01/EL01_284.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-mt">MT-CLDNN</span>
+            <audio controls preload="none"><source src="audio/el01_nl01/mtcldnn/EL01-NL01_MTCLDNN_h5_GV_no0th_284.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-tfs">TFS</span>
+            <audio controls preload="none"><source src="audio/el01_nl01/tfs/EL01-NL01_TFS_284.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-pt">PT</span>
+            <audio controls preload="none"><source src="audio/el01_nl01/pt/EL01-NL01_PT_284.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-nl">NL Speech</span>
+            <audio controls preload="none"><source src="audio/nl01/NL01_284.wav" type="audio/wav"></audio>
+          </div>
+        </div>
+      </div>
+
+      <div class="sample-block">
+        <div class="sample-header">
+          <span class="sample-num">Sample 3</span>
+          <span class="transcript">那個牆上掛著一幅油畫 <em>nà ge qiáng shàng guà zhe yī fú yóu huà</em></span>
+        </div>
+        <div class="audio-rows">
+          <div class="audio-row">
+            <span class="model-tag tag-el">EL Speech</span>
+            <audio controls preload="none"><source src="audio/el01/EL01_287.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-mt">MT-CLDNN</span>
+            <audio controls preload="none"><source src="audio/el01_nl01/mtcldnn/EL01-NL01_MTCLDNN_h5_GV_no0th_287.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-tfs">TFS</span>
+            <audio controls preload="none"><source src="audio/el01_nl01/tfs/EL01-NL01_TFS_287.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-pt">PT</span>
+            <audio controls preload="none"><source src="audio/el01_nl01/pt/EL01-NL01_PT_287.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-nl">NL Speech</span>
+            <audio controls preload="none"><source src="audio/nl01/NL01_287.wav" type="audio/wav"></audio>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EL01-NL02 -->
+    <div class="pair-section">
+      <div class="pair-label">Pair EL01 → NL02</div>
+
+      <div class="sample-block">
+        <div class="sample-header">
+          <span class="sample-num">Sample 1</span>
+          <span class="transcript">他捐了很多衣物給災區 <em>tā juān le hěn duō yī wù gěi zāi qū</em></span>
+        </div>
+        <div class="audio-rows">
+          <div class="audio-row">
+            <span class="model-tag tag-el">EL Speech</span>
+            <audio controls preload="none"><source src="audio/el01/EL01_281.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-mt">MT-CLDNN</span>
+            <audio controls preload="none"><source src="audio/el01_nl02/mtcldnn/EL01-NL02_MTCLDNN_h5_GV_no0th_281.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-tfs">TFS</span>
+            <audio controls preload="none"><source src="audio/el01_nl02/tfs/EL01-NL02_TFS_281.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-pt">PT</span>
+            <audio controls preload="none"><source src="audio/el01_nl02/pt/EL01-NL02_PT_281.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-nl">NL Speech</span>
+            <audio controls preload="none"><source src="audio/nl02/NL02_281.wav" type="audio/wav"></audio>
+          </div>
+        </div>
+      </div>
+
+      <div class="sample-block">
+        <div class="sample-header">
+          <span class="sample-num">Sample 2</span>
+          <span class="transcript">我幫他把雞蛋放入冰箱 <em>wǒ bāng tā bǎ jī dàn fàng rù bīng xiāng</em></span>
+        </div>
+        <div class="audio-rows">
+          <div class="audio-row">
+            <span class="model-tag tag-el">EL Speech</span>
+            <audio controls preload="none"><source src="audio/el01/EL01_285.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-mt">MT-CLDNN</span>
+            <audio controls preload="none"><source src="audio/el01_nl02/mtcldnn/EL01-NL02_MTCLDNN_h5_GV_no0th_285.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-tfs">TFS</span>
+            <audio controls preload="none"><source src="audio/el01_nl02/tfs/EL01-NL02_TFS_285.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-pt">PT</span>
+            <audio controls preload="none"><source src="audio/el01_nl02/pt/EL01-NL02_PT_285.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-nl">NL Speech</span>
+            <audio controls preload="none"><source src="audio/nl02/NL02_285.wav" type="audio/wav"></audio>
+          </div>
+        </div>
+      </div>
+
+      <div class="sample-block">
+        <div class="sample-header">
+          <span class="sample-num">Sample 3</span>
+          <span class="transcript">那個牆上掛著一幅油畫 <em>nà ge qiáng shàng guà zhe yī fú yóu huà</em></span>
+        </div>
+        <div class="audio-rows">
+          <div class="audio-row">
+            <span class="model-tag tag-el">EL Speech</span>
+            <audio controls preload="none"><source src="audio/el01/EL01_287.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-mt">MT-CLDNN</span>
+            <audio controls preload="none"><source src="audio/el01_nl02/mtcldnn/EL01-NL02_MTCLDNN_h5_GV_no0th_287.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-tfs">TFS</span>
+            <audio controls preload="none"><source src="audio/el01_nl02/tfs/EL01-NL02_TFS_287.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-pt">PT</span>
+            <audio controls preload="none"><source src="audio/el01_nl02/pt/EL01-NL02_PT_287.wav" type="audio/wav"></audio>
+          </div>
+          <div class="audio-row">
+            <span class="model-tag tag-nl">NL Speech</span>
+            <audio controls preload="none"><source src="audio/nl02/NL02_287.wav" type="audio/wav"></audio>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reference -->
+  <footer>
+    <h2>Reference</h2>
+    <p>
+      K. Kobayashi and T. Toda, "Implementation of low-latency electrolaryngeal speech enhancement based on multi-task CLDNN,"
+      in <em>Proceedings of 2020 28th EUSIPCO</em>, 2021, pp. 396–400.
+    </p>
+  </footer>
+
+</div>
+</body>
+</html>
