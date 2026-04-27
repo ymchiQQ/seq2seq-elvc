@@ -7,21 +7,21 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0d0f12;
-      --surface: #161a1f;
-      --surface2: #1e2329;
-      --border: #2a3140;
-      --accent: #4fc3f7;
-      --accent2: #81c784;
-      --accent3: #ffb74d;
-      --text: #e0e6ed;
-      --text-muted: #6b7a8d;
-      --text-dim: #3d4a5c;
-      --el-color: #ef9a9a;
-      --nl-color: #a5d6a7;
-      --mt-color: #ce93d8;
-      --tfs-color: #80cbc4;
-      --pt-color: #ffcc80;
+      --bg: #f5f6f8;
+      --surface: #ffffff;
+      --surface2: #f0f2f5;
+      --border: #dde1e8;
+      --accent: #1a6fbe;
+      --accent2: #2e7d32;
+      --accent3: #b45309;
+      --text: #1a1f2e;
+      --text-muted: #5a6478;
+      --text-dim: #adb5c4;
+      --el-color: #c0392b;
+      --nl-color: #2e7d32;
+      --mt-color: #6a1b9a;
+      --tfs-color: #00695c;
+      --pt-color: #e65100;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,15 +34,13 @@
       line-height: 1.7;
     }
 
-    /* Grid background */
+    /* subtle dot background */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image:
-        linear-gradient(rgba(79,195,247,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(79,195,247,0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
+      background-image: radial-gradient(circle, rgba(26,111,190,0.07) 1px, transparent 1px);
+      background-size: 28px 28px;
       pointer-events: none;
       z-index: 0;
     }
@@ -74,7 +72,7 @@
       font-size: clamp(22px, 4vw, 34px);
       font-weight: 600;
       line-height: 1.3;
-      color: #fff;
+      color: #0f172a;
       max-width: 780px;
     }
 
@@ -84,8 +82,8 @@
 
     .abstract-block {
       margin-top: 36px;
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: #eef4fb;
+      border: 1px solid #c8dcf0;
       border-left: 3px solid var(--accent);
       padding: 24px 28px;
       border-radius: 2px;
@@ -101,7 +99,7 @@
     }
 
     .abstract-block p {
-      color: #b0bec5;
+      color: #374151;
       font-size: 14px;
       line-height: 1.8;
     }
@@ -124,7 +122,7 @@
     h2.section-title {
       font-size: 20px;
       font-weight: 600;
-      color: #fff;
+      color: #0f172a;
       margin-bottom: 28px;
     }
 
@@ -218,7 +216,7 @@
       padding: 10px 14px;
       text-align: center;
       border-bottom: 1px solid var(--border);
-      background: var(--surface);
+      background: #f0f2f5;
     }
 
     .metrics-table th:first-child { text-align: left; }
@@ -227,7 +225,7 @@
       padding: 10px 14px;
       text-align: center;
       border-bottom: 1px solid var(--border);
-      background: var(--surface2);
+      background: #ffffff;
     }
 
     .metrics-table td:first-child {
@@ -288,7 +286,7 @@
 
     .transcript {
       font-size: 14px;
-      color: #cfd8dc;
+      color: #1e293b;
     }
 
     .transcript em {
@@ -323,20 +321,27 @@
       text-align: center;
     }
 
-    .tag-el   { color: var(--el-color); background: rgba(239,154,154,0.1); border: 1px solid rgba(239,154,154,0.2); }
-    .tag-nl   { color: var(--nl-color); background: rgba(165,214,167,0.1); border: 1px solid rgba(165,214,167,0.2); }
-    .tag-mt   { color: var(--mt-color); background: rgba(206,147,216,0.1); border: 1px solid rgba(206,147,216,0.2); }
-    .tag-tfs  { color: var(--tfs-color); background: rgba(128,203,196,0.1); border: 1px solid rgba(128,203,196,0.2); }
-    .tag-pt   { color: var(--pt-color); background: rgba(255,204,128,0.1); border: 1px solid rgba(255,204,128,0.2); }
+    .tag-el   { color: #c0392b; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.25); }
+    .tag-nl   { color: #2e7d32; background: rgba(46,125,50,0.08); border: 1px solid rgba(46,125,50,0.25); }
+    .tag-mt   { color: #6a1b9a; background: rgba(106,27,154,0.08); border: 1px solid rgba(106,27,154,0.25); }
+    .tag-tfs  { color: #00695c; background: rgba(0,105,92,0.08); border: 1px solid rgba(0,105,92,0.25); }
+    .tag-pt   { color: #e65100; background: rgba(230,81,0,0.08); border: 1px solid rgba(230,81,0,0.25); }
 
     audio {
       width: 100%;
-      height: 32px;
+      height: 36px;
       accent-color: var(--accent);
+      background-color: #cbd5e1;
+      border-radius: 6px;
     }
 
     audio::-webkit-media-controls-panel {
-      background-color: var(--surface2);
+      background-color: #cbd5e1;
+    }
+
+    audio::-webkit-media-controls-play-button,
+    audio::-webkit-media-controls-mute-button {
+      filter: brightness(0);
     }
 
     /* Footer */
